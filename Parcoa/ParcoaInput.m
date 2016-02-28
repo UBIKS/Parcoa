@@ -44,9 +44,19 @@
 
 - (BOOL)hasPrefix:(NSString *)aString
 {
-    NSRange r = [self.string rangeOfString:aString options:0 range:self.residual];
+    NSString *string = self.string;
+    NSRange residual = self.residual;
+    if(string.length < residual.location + aString.length){
+        return NO;
+    }
     
-    return r.location == self.residual.location;
+    for(int i = 0; i < aString.length; i++){
+        if([string characterAtIndex:residual.location + i] != [aString characterAtIndex:i]){
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 - (unichar)characterAtIndex:(NSUInteger)index
