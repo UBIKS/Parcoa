@@ -124,6 +124,13 @@
     return _type == ParcoaResultOK;
 }
 
+- (id)value {
+    if([_value isKindOfClass:ParcoaInput.class]){
+        return [(ParcoaInput *)_value stringValue];
+    }
+    return _value;
+}
+
 - (NSString *)description {
     if ([self isOK]) {
         return [NSString stringWithFormat:@"ParcoaResult(OK,%@,%@)", self.value, self.residual];
@@ -160,7 +167,7 @@
 }
 
 - (NSString *)formatTraceback:(ParcoaInput *)input expectation:(ParcoaExpectation *)expectation indent:(NSUInteger)indent {
-    ParcoaLineColumn position = [input.string lineAndColumnForIndex:input.length - expectation.charactersRemaining];
+    ParcoaLineColumn position = [input.stringValue lineAndColumnForIndex:input.length - expectation.charactersRemaining];
     NSString *tabs = [@"" stringByPaddingToLength:indent withString:@"\t" startingAtIndex:0];
     return [NSString stringWithFormat:@"%@Line %lu Column %lu: Expected %@.\n", tabs, (unsigned long)position.line, (unsigned long)position.column, expectation.expected];
 }

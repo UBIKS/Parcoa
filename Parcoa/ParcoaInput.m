@@ -10,7 +10,7 @@
 
 @interface ParcoaInput ()
 
-@property (nonatomic, weak, readwrite) NSString *string;
+@property (nonatomic) NSString *string;
 @property (nonatomic, readwrite) NSRange residual;
 
 @end
@@ -30,6 +30,11 @@
         self.residual = residual;
     }
     return self;
+}
+
+- (NSString *)stringValue
+{
+    return [self.string substringWithRange:self.residual];
 }
 
 - (NSUInteger)length

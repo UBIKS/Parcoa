@@ -10,12 +10,13 @@
 
 @interface ParcoaInput : NSObject
 
-@property (nonatomic, weak, readonly) NSString *string;
 @property (nonatomic, readonly) NSUInteger length;
 
 - (instancetype)initWithString:(NSString *)string;
 
 - (instancetype)initWithString:(NSString *)string residual:(NSRange)residual;
+
+- (NSString *)stringValue;
 
 - (BOOL)isEqualToString:(NSString *)aString;
 
