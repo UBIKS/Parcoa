@@ -86,7 +86,7 @@
 
 + (ParcoaParser *)take:(ParcoaPredicate *)predicate count:(NSUInteger)n {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaInput *input) {
-        ParcoaResult *result = [[Parcoa takeWhile1:predicate] parseInput:input];
+        ParcoaResult *result = [[Parcoa takeWhile1:predicate] parse:input];
         if (result.isOK && [result.value length] >= n) {
             return [ParcoaResult ok:[input substringToIndex:n] residual:[input substringFromIndex:n] expected:[ParcoaExpectation unsatisfiable]];
         } else {
@@ -118,9 +118,9 @@
 
 + (ParcoaParser *)takeWhile1:(ParcoaPredicate *)condition {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaInput *input) {
-        ParcoaResult *head = [[Parcoa satisfy:condition] parseInput:input];
+        ParcoaResult *head = [[Parcoa satisfy:condition] parse:input];
         if (head.isOK) {
-            ParcoaResult *tail = [[Parcoa takeWhile:condition] parseInput:head.residual];
+            ParcoaResult *tail = [[Parcoa takeWhile:condition] parse:head.residual];
             id value = [head.value stringByAppendingString:tail.value];
             return [ParcoaResult ok:value residual:tail.residual expectedWithFormat:@"Character matching predicate %@", condition.description];
         } else {

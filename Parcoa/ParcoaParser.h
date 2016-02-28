@@ -100,12 +100,8 @@ typedef ParcoaResult *(^ParcoaParserBlock)(ParcoaInput *input);
  */
 - (ParcoaParser *)parserWithName:(NSString *)name summaryWithFormat:(NSString *)format, ...;
 
-/// @name Parse a ParcoaInput
-/** Supplies the parser block with input and returns the result. */
-- (ParcoaResult *)parseInput:(ParcoaInput *)input;
-
 /// @name Parse a String
 /** Supplies the parser block with a string and returns the result. */
-- (ParcoaResult *)parse:(NSString *)string;
+- (ParcoaResult *)parse:(id)string;
  
 @end

@@ -46,7 +46,7 @@
         for (NSUInteger i = 0; i < parsers.count; i++) {
             
             ParcoaParser *parser = parsers[i];
-            ParcoaResult *result = [parser parseInput:input];
+            ParcoaResult *result = [parser parse:input];
             
             if (result.isOK) {
                 return [ParcoaResult okWithChildren:failures value:result.value residual:result.residual expected:[ParcoaExpectation choice]];
@@ -69,7 +69,7 @@
         ParcoaInput *residual = input;
         
         for (NSUInteger i = 0; i < n; i++) {
-            ParcoaResult *result = [parser parseInput:residual];
+            ParcoaResult *result = [parser parse:residual];
             if (result.isOK) {
                 residual = result.residual;
                 [values setObject:result.value atIndexedSubscript:i];
@@ -83,7 +83,7 @@
 
 + (ParcoaParser *)option:(ParcoaParser *)parser default:(id)value {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaInput *input) {
-        ParcoaResult *result = [parser parseInput:input];
+        ParcoaResult *result = [parser parse:input];
         if (result.isOK) {
             return result;
         } else {
@@ -98,7 +98,7 @@
 
 + (ParcoaParser *)parser:(ParcoaParser *)parser notFollowedBy:(ParcoaParser *)following {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaInput *input) {
-        ParcoaResult *result = [parser parseInput:input];
+        ParcoaResult *result = [parser parse:input];
         
         // Don't need to consider the must fail parser if
         // the primary parser fails.
@@ -106,7 +106,7 @@
             return result;
         }
         
-        ParcoaResult *mustFailResult = [following parseInput:result.residual];
+        ParcoaResult *mustFailResult = [following parse:result.residual];
         if (mustFailResult.isFail) {
             return result;
         } else {
@@ -126,13 +126,13 @@
         NSMutableArray *results = [NSMutableArray array];
         
         ParcoaInput *residual = input;
-        ParcoaResult *result = [parser parseInput:residual];
+        ParcoaResult *result = [parser parse:residual];
         
         while (result.isOK) {
             [results addObject:result];
             [values addObject:result.value];
             residual = result.residual;
-            result = [parser parseInput:residual];
+            result = [parser parse:residual];
         }
         [results addObject:result];
         if (values.count > 0) {
@@ -149,7 +149,7 @@
 
 + (ParcoaParser *)sepBy1:(ParcoaParser *)parser delimiter:(ParcoaParser *)delimiter {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaInput *input) {
-        ParcoaResult *result = [[Parcoa sequential:@[parser, [Parcoa many:[Parcoa parser:delimiter keepRight:parser]]]] parseInput:input];
+        ParcoaResult *result = [[Parcoa sequential:@[parser, [Parcoa many:[Parcoa parser:delimiter keepRight:parser]]]] parse:input];
         if (result.isOK) {
             id value = [@[result.value[0]] arrayByAddingObjectsFromArray:result.value[1]];
             return [ParcoaResult okWithChildren:@[result] value:value residual:result.residual expected:@"more matches of delimiter and child parser"];
@@ -165,7 +165,7 @@
 
 + (ParcoaParser *)sepBy1Keep:(ParcoaParser *)parser delimiter:(ParcoaParser *)delimiter {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaInput *input) {
-        ParcoaResult *result = [[Parcoa sequential:@[parser, [Parcoa many:[Parcoa sequential:@[delimiter, parser]]]]] parseInput:input];
+        ParcoaResult *result = [[Parcoa sequential:@[parser, [Parcoa many:[Parcoa sequential:@[delimiter, parser]]]]] parse:input];
         if (result.isOK) {
             NSMutableArray *value = [NSMutableArray arrayWithObject:result.value[0]];
             [result.value[1] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -186,7 +186,7 @@
         ParcoaInput *residual = input;
         for (NSUInteger i = 0; i < parsers.count; i++) {
             ParcoaParser *parser = parsers[i];
-            ParcoaResult *result = [parser parseInput:residual];
+            ParcoaResult *result = [parser parse:residual];
             [results addObject:result];
             
             if (result.isOK) {
@@ -218,7 +218,7 @@
 
 + (ParcoaParser *)parser:(ParcoaParser *)parser transform:(ParcoaValueTransform)transform name:(NSString *)name {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaInput *input) {
-        ParcoaResult *result = [parser parseInput:input];
+        ParcoaResult *result = [parser parse:input];
         if (result.isOK) {
             return [ParcoaResult ok:transform(result.value) residual:result.residual expected:result.expectation.expected];
         } else {

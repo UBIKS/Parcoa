@@ -73,12 +73,12 @@
     return [self parserWithName:name summary:summary];
 }
 
-- (ParcoaResult *)parseInput:(ParcoaInput *)input {
-    return _block(input);
-}
-
-- (ParcoaResult *)parse:(NSString *)string {
-    return _block([[ParcoaInput alloc] initWithString:string]);
+- (ParcoaResult *)parse:(id)string {
+    if([string isKindOfClass:NSString.class]){
+        return _block([[ParcoaInput alloc] initWithString:string]);
+    }
+    
+    return _block(string);
 }
 
 - (NSString *)description {
