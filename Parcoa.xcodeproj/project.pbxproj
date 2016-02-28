@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3180FFBD1C82C24C00605B86 /* ParcoaInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 3180FFBB1C82C24C00605B86 /* ParcoaInput.h */; };
+		3180FFBE1C82C24C00605B86 /* ParcoaInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180FFBC1C82C24C00605B86 /* ParcoaInput.m */; };
 		E50C9B6216903D1A00851B04 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50C9B6116903D1A00851B04 /* Foundation.framework */; };
 		E50C9B6716903D1A00851B04 /* Parcoa.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E50C9B6616903D1A00851B04 /* Parcoa.h */; };
 		E50C9B7316903D1A00851B04 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50C9B7216903D1A00851B04 /* UIKit.framework */; };
@@ -116,12 +118,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3180FFBB1C82C24C00605B86 /* ParcoaInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParcoaInput.h; sourceTree = "<group>"; };
+		3180FFBC1C82C24C00605B86 /* ParcoaInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParcoaInput.m; sourceTree = "<group>"; };
 		E50C9B5E16903D1A00851B04 /* libParcoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libParcoa.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50C9B6116903D1A00851B04 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E50C9B6516903D1A00851B04 /* Parcoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Parcoa-Prefix.pch"; sourceTree = "<group>"; };
 		E50C9B6616903D1A00851B04 /* Parcoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parcoa.h; sourceTree = "<group>"; };
 		E50C9B6816903D1A00851B04 /* Parcoa+Internal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Parcoa+Internal.m"; sourceTree = "<group>"; };
-		E50C9B6F16903D1A00851B04 /* ParcoaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParcoaTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50C9B6F16903D1A00851B04 /* ParcoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParcoaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50C9B7216903D1A00851B04 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		E50C9B7A16903D1A00851B04 /* ParcoaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ParcoaTests-Info.plist"; sourceTree = "<group>"; };
 		E50C9B7C16903D1A00851B04 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -213,7 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				E50C9B5E16903D1A00851B04 /* libParcoa.a */,
-				E50C9B6F16903D1A00851B04 /* ParcoaTests.octest */,
+				E50C9B6F16903D1A00851B04 /* ParcoaTests.xctest */,
 				E5A2DF2C16966C1000EFC414 /* Parcoa OS X.dylib */,
 			);
 			name = Products;
@@ -287,6 +291,8 @@
 				E5836C7816958C8300D9C21A /* ParcoaParserForward.m */,
 				E5F62B3816956D9A0052CF6D /* ParcoaPredicate.h */,
 				E5F62B3916956D9A0052CF6D /* ParcoaPredicate.m */,
+				3180FFBB1C82C24C00605B86 /* ParcoaInput.h */,
+				3180FFBC1C82C24C00605B86 /* ParcoaInput.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -371,6 +377,7 @@
 				E55CFCD71694216800CC08DA /* NSString+Parcoa.h in Headers */,
 				E51C2F39169470F10013AD2D /* Parcoa+Numbers.h in Headers */,
 				E51C2F3D1694750F0013AD2D /* Parcoa+NSDictionary.h in Headers */,
+				3180FFBD1C82C24C00605B86 /* ParcoaInput.h in Headers */,
 				E5F0A68816954DFE00A1C5E2 /* ParcoaExpectation.h in Headers */,
 				E5F62B31169569A90052CF6D /* ParcoaParser.h in Headers */,
 				E5F62B3616956C210052CF6D /* Parcoa+Primitives.h in Headers */,
@@ -434,7 +441,6 @@
 				E50C9B6A16903D1A00851B04 /* Sources */,
 				E50C9B6B16903D1A00851B04 /* Frameworks */,
 				E50C9B6C16903D1A00851B04 /* Resources */,
-				E50C9B6D16903D1A00851B04 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -443,7 +449,7 @@
 			);
 			name = ParcoaTests;
 			productName = ParcoaTests;
-			productReference = E50C9B6F16903D1A00851B04 /* ParcoaTests.octest */;
+			productReference = E50C9B6F16903D1A00851B04 /* ParcoaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		E5A2DF2B16966C1000EFC414 /* Parcoa OS X */ = {
@@ -470,7 +476,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0610;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Factorial Products Pty. Ltd.";
 			};
 			buildConfigurationList = E50C9B5816903D1900851B04 /* Build configuration list for PBXProject "Parcoa" */;
@@ -503,22 +509,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		E50C9B6D16903D1A00851B04 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		E50C9B5A16903D1900851B04 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -534,6 +524,7 @@
 				E5F62B3716956C210052CF6D /* Parcoa+Primitives.m in Sources */,
 				E5F62B3B16956D9A0052CF6D /* ParcoaPredicate.m in Sources */,
 				E5F62B3F169573F50052CF6D /* Parcoa+Predicates.m in Sources */,
+				3180FFBE1C82C24C00605B86 /* ParcoaInput.m in Sources */,
 				E5F62B43169586760052CF6D /* ParcoaParser+Combinators.m in Sources */,
 				E5836C7A16958C8300D9C21A /* ParcoaParserForward.m in Sources */,
 				E5836C7E169592AC00D9C21A /* ParcoaParser+NSDictionary.m in Sources */,
@@ -619,6 +610,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -693,6 +685,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Parcoa/Parcoa-Prefix.pch";
 				INFOPLIST_FILE = "ParcoaTests/ParcoaTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.factorialproducts.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -708,6 +701,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Parcoa/Parcoa-Prefix.pch";
 				INFOPLIST_FILE = "ParcoaTests/ParcoaTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.factorialproducts.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

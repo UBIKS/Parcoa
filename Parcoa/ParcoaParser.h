@@ -35,11 +35,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ParcoaResult.h"
+#import "ParcoaInput.h"
 
 /** The primary Parcoa parser block: A function that accepts
  *  an input and returns an OK or Fail result.
  */
-typedef ParcoaResult *(^ParcoaParserBlock)(NSString *input);
+typedef ParcoaResult *(^ParcoaParserBlock)(ParcoaInput *input);
 
 /** The fundamental unit of parsing is Parcoa. ParcoaParser is a
  *  lite wrapper around a ParcoaParserBlock. A ParcoaParser attempts
@@ -99,9 +100,12 @@ typedef ParcoaResult *(^ParcoaParserBlock)(NSString *input);
  */
 - (ParcoaParser *)parserWithName:(NSString *)name summaryWithFormat:(NSString *)format, ...;
 
-/// @name Parse a String
-
+/// @name Parse a ParcoaInput
 /** Supplies the parser block with input and returns the result. */
-- (ParcoaResult *)parse:(NSString *)input;
+- (ParcoaResult *)parseInput:(ParcoaInput *)input;
 
+/// @name Parse a String
+/** Supplies the parser block with a string and returns the result. */
+- (ParcoaResult *)parse:(NSString *)string;
+ 
 @end

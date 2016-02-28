@@ -34,6 +34,7 @@
 */
 
 #import <Foundation/Foundation.h>
+#import "ParcoaInput.h"
 
 /** An immutable expectation object that
  *  describes what a parser *expected* to find. */
@@ -62,7 +63,7 @@
 /// @name Create an Expectation
 
 /** Creates an immutable ParcoaExpectation. */
-+ (ParcoaExpectation *)expectationWithRemaining:(NSString *)remaining expected:(NSString *)expected children:(NSArray *)children;
++ (ParcoaExpectation *)expectationWithRemaining:(ParcoaInput *)remaining expected:(NSString *)expected children:(NSArray *)children;
 
 /// @name Special Expectation Strings
 
