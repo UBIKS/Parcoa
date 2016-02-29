@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3180FFBD1C82C24C00605B86 /* ParcoaInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 3180FFBB1C82C24C00605B86 /* ParcoaInput.h */; };
-		3180FFBE1C82C24C00605B86 /* ParcoaInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180FFBC1C82C24C00605B86 /* ParcoaInput.m */; };
+		3180FFBD1C82C24C00605B86 /* ParcoaParcelString.h in Headers */ = {isa = PBXBuildFile; fileRef = 3180FFBB1C82C24C00605B86 /* ParcoaParcelString.h */; };
+		3180FFBE1C82C24C00605B86 /* ParcoaParcelString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180FFBC1C82C24C00605B86 /* ParcoaParcelString.m */; };
+		3180FFC11C82F8E100605B86 /* NSArray+Parcoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 3180FFBF1C82F8E100605B86 /* NSArray+Parcoa.h */; };
+		3180FFC21C82F8E100605B86 /* NSArray+Parcoa.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180FFC01C82F8E100605B86 /* NSArray+Parcoa.m */; };
+		3180FFC31C83006B00605B86 /* NSArray+Parcoa.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180FFC01C82F8E100605B86 /* NSArray+Parcoa.m */; };
+		3180FFC41C83006D00605B86 /* NSArray+Parcoa.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180FFC01C82F8E100605B86 /* NSArray+Parcoa.m */; };
+		3180FFC71C83DA5C00605B86 /* ParcoaMutableParcelString.h in Headers */ = {isa = PBXBuildFile; fileRef = 3180FFC51C83DA5C00605B86 /* ParcoaMutableParcelString.h */; };
+		3180FFC81C83DA5C00605B86 /* ParcoaMutableParcelString.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180FFC61C83DA5C00605B86 /* ParcoaMutableParcelString.m */; };
 		E50C9B6216903D1A00851B04 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50C9B6116903D1A00851B04 /* Foundation.framework */; };
 		E50C9B6716903D1A00851B04 /* Parcoa.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E50C9B6616903D1A00851B04 /* Parcoa.h */; };
 		E50C9B7316903D1A00851B04 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E50C9B7216903D1A00851B04 /* UIKit.framework */; };
@@ -118,8 +124,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3180FFBB1C82C24C00605B86 /* ParcoaInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParcoaInput.h; sourceTree = "<group>"; };
-		3180FFBC1C82C24C00605B86 /* ParcoaInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParcoaInput.m; sourceTree = "<group>"; };
+		3180FFBB1C82C24C00605B86 /* ParcoaParcelString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParcoaParcelString.h; sourceTree = "<group>"; };
+		3180FFBC1C82C24C00605B86 /* ParcoaParcelString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParcoaParcelString.m; sourceTree = "<group>"; };
+		3180FFBF1C82F8E100605B86 /* NSArray+Parcoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Parcoa.h"; sourceTree = "<group>"; };
+		3180FFC01C82F8E100605B86 /* NSArray+Parcoa.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Parcoa.m"; sourceTree = "<group>"; };
+		3180FFC51C83DA5C00605B86 /* ParcoaMutableParcelString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParcoaMutableParcelString.h; sourceTree = "<group>"; };
+		3180FFC61C83DA5C00605B86 /* ParcoaMutableParcelString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParcoaMutableParcelString.m; sourceTree = "<group>"; };
 		E50C9B5E16903D1A00851B04 /* libParcoa.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libParcoa.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50C9B6116903D1A00851B04 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E50C9B6516903D1A00851B04 /* Parcoa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Parcoa-Prefix.pch"; sourceTree = "<group>"; };
@@ -291,8 +301,10 @@
 				E5836C7816958C8300D9C21A /* ParcoaParserForward.m */,
 				E5F62B3816956D9A0052CF6D /* ParcoaPredicate.h */,
 				E5F62B3916956D9A0052CF6D /* ParcoaPredicate.m */,
-				3180FFBB1C82C24C00605B86 /* ParcoaInput.h */,
-				3180FFBC1C82C24C00605B86 /* ParcoaInput.m */,
+				3180FFBB1C82C24C00605B86 /* ParcoaParcelString.h */,
+				3180FFBC1C82C24C00605B86 /* ParcoaParcelString.m */,
+				3180FFC51C83DA5C00605B86 /* ParcoaMutableParcelString.h */,
+				3180FFC61C83DA5C00605B86 /* ParcoaMutableParcelString.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -302,6 +314,8 @@
 			children = (
 				E55CFCD51694216800CC08DA /* NSString+Parcoa.h */,
 				E55CFCD61694216800CC08DA /* NSString+Parcoa.m */,
+				3180FFBF1C82F8E100605B86 /* NSArray+Parcoa.h */,
+				3180FFC01C82F8E100605B86 /* NSArray+Parcoa.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -377,11 +391,13 @@
 				E55CFCD71694216800CC08DA /* NSString+Parcoa.h in Headers */,
 				E51C2F39169470F10013AD2D /* Parcoa+Numbers.h in Headers */,
 				E51C2F3D1694750F0013AD2D /* Parcoa+NSDictionary.h in Headers */,
-				3180FFBD1C82C24C00605B86 /* ParcoaInput.h in Headers */,
+				3180FFBD1C82C24C00605B86 /* ParcoaParcelString.h in Headers */,
+				3180FFC11C82F8E100605B86 /* NSArray+Parcoa.h in Headers */,
 				E5F0A68816954DFE00A1C5E2 /* ParcoaExpectation.h in Headers */,
 				E5F62B31169569A90052CF6D /* ParcoaParser.h in Headers */,
 				E5F62B3616956C210052CF6D /* Parcoa+Primitives.h in Headers */,
 				E5F62B3A16956D9A0052CF6D /* ParcoaPredicate.h in Headers */,
+				3180FFC71C83DA5C00605B86 /* ParcoaMutableParcelString.h in Headers */,
 				E5F62B3E169573F50052CF6D /* Parcoa+Predicates.h in Headers */,
 				E5F62B42169586760052CF6D /* ParcoaParser+Combinators.h in Headers */,
 				E5836C7916958C8300D9C21A /* ParcoaParserForward.h in Headers */,
@@ -516,6 +532,7 @@
 			files = (
 				E50C9B8B16903FE000851B04 /* ParcoaResult.m in Sources */,
 				E55CFCCD16905CB800CC08DA /* Parcoa+Combinators.m in Sources */,
+				3180FFC81C83DA5C00605B86 /* ParcoaMutableParcelString.m in Sources */,
 				E55CFCD81694216800CC08DA /* NSString+Parcoa.m in Sources */,
 				E51C2F3A169470F10013AD2D /* Parcoa+Numbers.m in Sources */,
 				E51C2F3E1694750F0013AD2D /* Parcoa+NSDictionary.m in Sources */,
@@ -524,12 +541,13 @@
 				E5F62B3716956C210052CF6D /* Parcoa+Primitives.m in Sources */,
 				E5F62B3B16956D9A0052CF6D /* ParcoaPredicate.m in Sources */,
 				E5F62B3F169573F50052CF6D /* Parcoa+Predicates.m in Sources */,
-				3180FFBE1C82C24C00605B86 /* ParcoaInput.m in Sources */,
+				3180FFBE1C82C24C00605B86 /* ParcoaParcelString.m in Sources */,
 				E5F62B43169586760052CF6D /* ParcoaParser+Combinators.m in Sources */,
 				E5836C7A16958C8300D9C21A /* ParcoaParserForward.m in Sources */,
 				E5836C7E169592AC00D9C21A /* ParcoaParser+NSDictionary.m in Sources */,
 				E5836C84169596A900D9C21A /* Parcoa+Internal.m in Sources */,
 				E5BCC77F1696A3690017F99F /* ParcoaPredicate+Combinators.m in Sources */,
+				3180FFC21C82F8E100605B86 /* NSArray+Parcoa.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +567,7 @@
 				E5836C71169589E000D9C21A /* Parcoa+Primitives.m in Sources */,
 				E5836C72169589E000D9C21A /* ParcoaPredicate.m in Sources */,
 				E5836C73169589E000D9C21A /* ParcoaParser+Combinators.m in Sources */,
+				3180FFC31C83006B00605B86 /* NSArray+Parcoa.m in Sources */,
 				E5836C7516958A4D00D9C21A /* ParcoaTests+Combinators.m in Sources */,
 				E5836C85169596A900D9C21A /* Parcoa+Internal.m in Sources */,
 				E5BCC7821696A58B0017F99F /* ParcoaPredicate+Combinators.m in Sources */,
@@ -575,6 +594,7 @@
 				E5A2DF4E16966CBF00EFC414 /* NSString+Parcoa.m in Sources */,
 				E5A2DF3816966C1000EFC414 /* Parcoa_OSX.m in Sources */,
 				E5BCC7811696A36D0017F99F /* ParcoaPredicate+Combinators.m in Sources */,
+				3180FFC41C83006D00605B86 /* NSArray+Parcoa.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

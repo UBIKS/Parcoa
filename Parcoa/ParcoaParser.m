@@ -75,7 +75,7 @@
 
 - (ParcoaResult *)parse:(id)string {
     if([string isKindOfClass:NSString.class]){
-        return _block([[ParcoaInput alloc] initWithString:string]);
+        return _block([[ParcoaParcelString alloc] initWithString:string]);
     }
     
     return _block(string);

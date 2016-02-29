@@ -1,5 +1,5 @@
 //
-//  ParcoaInput.h
+//  ParcoaParcelString.h
 //  Parcoa
 //
 //  Created by KATAOKA,Atsushi on 2016/02/28.
@@ -8,15 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ParcoaInput : NSObject
+@interface ParcoaParcelString : NSObject
+{
+@protected
+    NSString *_string;
+    NSRange _range;
+}
 
-@property (nonatomic, readonly) NSUInteger length;
+@property (nonatomic, readonly) NSString *string;
+
+@property (nonatomic, readonly) NSRange range;
+
+- (NSString *)stringValue;
 
 - (instancetype)initWithString:(NSString *)string;
 
-- (instancetype)initWithString:(NSString *)string residual:(NSRange)residual;
+- (instancetype)initWithString:(NSString *)string range:(NSRange)range;
 
-- (NSString *)stringValue;
+- (NSUInteger)length;
 
 - (BOOL)isEqualToString:(NSString *)aString;
 
@@ -28,6 +37,6 @@
 
 - (instancetype)substringToIndex:(NSUInteger)index;
 
-- (instancetype)stringByAppendingString:(ParcoaInput *)input;
+- (instancetype)stringByAppendingString:(ParcoaParcelString *)aPercelString;
 
 @end

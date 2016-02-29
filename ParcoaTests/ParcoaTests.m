@@ -161,5 +161,16 @@
     XCTAssertTrue([ok.value count] == 2, @"Result count should be 2.");
 }
 
+- (void)testConcatMany
+{
+    ParcoaParser *concat = [Parcoa concatMany:[Parcoa anyUnichar]];
+    
+    ParcoaResult *ok = [concat parse:@"HelloWorld"];
+    
+    XCTAssertTrue(ok.isOK, @"HelloWorld should match.");
+    
+    XCTAssertTrue([@"HelloWorld" isEqualToString:ok.value]);
+}
+
 
 @end

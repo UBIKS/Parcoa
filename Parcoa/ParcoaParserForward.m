@@ -45,7 +45,7 @@
 }
 
 - (id)initWithName:(NSString *)name summary:(NSString *)summary {
-    self = [super initWithBlock:^ParcoaResult *(ParcoaInput *input) {
+    self = [super initWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         return [_implementation parse:input];
     } name:name summary:summary];
     return self;

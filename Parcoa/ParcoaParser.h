@@ -35,12 +35,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ParcoaResult.h"
-#import "ParcoaInput.h"
+#import "ParcoaParcelString.h"
 
 /** The primary Parcoa parser block: A function that accepts
  *  an input and returns an OK or Fail result.
  */
-typedef ParcoaResult *(^ParcoaParserBlock)(ParcoaInput *input);
+typedef ParcoaResult *(^ParcoaParserBlock)(ParcoaParcelString *input);
 
 /** The fundamental unit of parsing is Parcoa. ParcoaParser is a
  *  lite wrapper around a ParcoaParserBlock. A ParcoaParser attempts
