@@ -36,19 +36,21 @@
 #import "ParcoaExpectation.h"
 
 @interface ParcoaExpectation ()
-- (id)initWithRemaining:(ParcoaParcelString *)remaining expected:(NSString *)expected children:(NSArray *)children;
+- (id)initWithInput:(NSString *)input remaining:(NSRange)remaining expected:(NSString *)expected children:(NSArray *)children;
 @end
 
 @implementation ParcoaExpectation {
+    NSString *_input;
     NSUInteger _minCharactersRemaining;
 }
 @synthesize charactersRemaining = _charactersRemaining;
 @synthesize expected = _expected;
 @synthesize children = _children;
 
-- (id)initWithRemaining:(ParcoaParcelString *)remaining expected:(NSString *)expected children:(NSArray *)children {
+- (id)initWithInput:(NSString *)input remaining:(NSRange)remaining expected:(NSString *)expected children:(NSArray *)children {
     self = [super init];
     if (self) {
+        _input = input;
         _charactersRemaining = remaining.length;
         _expected = expected;
         _children = children;
@@ -71,8 +73,8 @@
     return _minCharactersRemaining;
 }
 
-+ (ParcoaExpectation *)expectationWithRemaining:(ParcoaParcelString *)remaining expected:(NSString *)expected children:(NSArray *)children {
-    return [[ParcoaExpectation alloc] initWithRemaining:remaining expected:expected children:children];
++ (ParcoaExpectation *)expectationWithInput:(NSString *)input remaining:(NSRange)remaining expected:(NSString *)expected children:(NSArray *)children {
+    return [[ParcoaExpectation alloc] initWithInput:input remaining:remaining expected:expected children:children];
 }
 
 - (NSString *)description {

@@ -63,7 +63,7 @@
 /// @name Create an Expectation
 
 /** Creates an immutable ParcoaExpectation. */
-+ (ParcoaExpectation *)expectationWithRemaining:(ParcoaParcelString *)remaining expected:(NSString *)expected children:(NSArray *)children;
++ (ParcoaExpectation *)expectationWithInput:(NSString *)input remaining:(NSRange)remaining expected:(NSString *)expected children:(NSArray *)children;
 
 /// @name Special Expectation Strings
 

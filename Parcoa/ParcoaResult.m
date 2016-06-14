@@ -36,9 +36,10 @@
 #import "ParcoaResult.h"
 #import "NSString+Parcoa.h"
 #import "NSArray+Parcoa.h"
+#import "ParcoaParcelString.h"
 
 @interface ParcoaResult ()
-- (id)initOK:(id)value residual:(ParcoaParcelString *)residual expectation:(ParcoaExpectation *)expectation;
+- (id)initOK:(id)value input:(NSString *)input residual:(NSRange)residual expectation:(ParcoaExpectation *)expectation;
 - (id)initFail:(ParcoaExpectation *)expectation;
 @end
 
@@ -46,15 +47,17 @@
 
 @synthesize type = _type; 
 @synthesize value = _value;
-@synthesize residual = _residual;
+@synthesize input = _input;
+@synthesize residualRange = _residualRange;
 @synthesize expectation = _expectation;
 
-- (id)initOK:(id)value residual:(ParcoaParcelString *)residual expectation:(ParcoaExpectation *)expectation{
+- (id)initOK:(id)value input:(NSString *)input residual:(NSRange)residual expectation:(ParcoaExpectation *)expectation{
     self = [super init];
     if (self) {
         _type = ParcoaResultOK;
         _value = value;
-        _residual = residual;
+        _input = input;
+        _residualRange = residual;
         _expectation = expectation;
     }
     return self;
@@ -65,56 +68,56 @@
     if (self) {
         _type = ParcoaResultFail;
         _value = nil;
-        _residual = nil;
+        _residualRange = NSMakeRange(NSNotFound, 0);
         _expectation = expectation;
     }
     return self;
 }
 
-+ (ParcoaResult *)ok:(id)value residual:(ParcoaParcelString *)residual expected:(NSString *)expected{
-    return [[ParcoaResult alloc] initOK:value residual:residual expectation:[ParcoaExpectation expectationWithRemaining:residual expected:expected children:nil]];
++ (ParcoaResult *)ok:(id)value input:(NSString *)input residual:(NSRange)residual expected:(NSString *)expected{
+    return [[ParcoaResult alloc] initOK:value input:input residual:residual expectation:[ParcoaExpectation expectationWithInput:input remaining:residual expected:expected children:nil]];
 }
 
-+ (ParcoaResult *)ok:(id)value residual:(ParcoaParcelString *)residual expectedWithFormat:(NSString *)format, ... {
++ (ParcoaResult *)ok:(id)value input:(NSString *)input residual:(NSRange)residual expectedWithFormat:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
     NSString *expected = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
-    return [ParcoaResult ok:value residual:residual expected:expected];
+    return [ParcoaResult ok:value input:input residual:residual expected:expected];
 }
 
-+ (ParcoaResult *)okWithChildren:(NSArray *)children value:(id)value residual:(ParcoaParcelString *)residual expected:(NSString *)expected {
++ (ParcoaResult *)okWithChildren:(NSArray *)children value:(id)value input:(NSString *)input residual:(NSRange)residual expected:(NSString *)expected {
     NSArray *expectations = [children valueForKey:@"expectation"];
-    return [[ParcoaResult alloc] initOK:value residual:residual expectation:[ParcoaExpectation expectationWithRemaining:residual expected:expected children:expectations]];
+    return [[ParcoaResult alloc] initOK:value input:input residual:residual expectation:[ParcoaExpectation expectationWithInput:input remaining:residual expected:expected children:expectations]];
 }
 
-+ (ParcoaResult *)failWithRemaining:(ParcoaParcelString *)remaining expected:(NSString *)expected {
-    return [[ParcoaResult alloc] initFail:[ParcoaExpectation expectationWithRemaining:remaining expected:expected children:nil]];
++ (ParcoaResult *)failWithInput:(NSString *)input remaining:(NSRange)remaining expected:(NSString *)expected {
+    return [[ParcoaResult alloc] initFail:[ParcoaExpectation expectationWithInput:input remaining:remaining expected:expected children:nil]];
 }
 
-+ (ParcoaResult *)failWithRemaining:(ParcoaParcelString *)remaining expectedWithFormat:(NSString *)format, ... {
++ (ParcoaResult *)failWithInput:(NSString *)input remaining:(NSRange)remaining expectedWithFormat:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
     NSString *expected = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
-    return [ParcoaResult failWithRemaining:remaining expected:expected];
+    return [ParcoaResult failWithInput:input remaining:remaining expected:expected];
 }
 
-+ (ParcoaResult *)failWithChildren:(NSArray *)children remaining:(ParcoaParcelString *)remaining expected:(NSString *)expected {
++ (ParcoaResult *)failWithChildren:(NSArray *)children input:(NSString *)input remaining:(NSRange)remaining expected:(NSString *)expected {
     NSArray *expectations = [children valueForKey:@"expectation"];
-    return [[ParcoaResult alloc] initFail:[ParcoaExpectation expectationWithRemaining:remaining expected:expected children:expectations]];
+    return [[ParcoaResult alloc] initFail:[ParcoaExpectation expectationWithInput:input remaining:remaining expected:expected children:expectations]];
 }
 
-- (ParcoaResult *)prependExpectationWithRemaining:(ParcoaParcelString *)remaining expected:(NSString *)expected {
-    return [[ParcoaResult alloc] initFail:[ParcoaExpectation expectationWithRemaining:remaining expected:expected children:@[self.expectation]]];
+- (ParcoaResult *)prependExpectationWithInput:(NSString *)input remaining:(NSRange)remaining expected:(NSString *)expected {
+    return [[ParcoaResult alloc] initFail:[ParcoaExpectation expectationWithInput:input remaining:remaining expected:expected children:@[self.expectation]]];
 }
 
-- (ParcoaResult *)prependExpectationWithRemaining:(ParcoaParcelString *)remaining expectedWithFormat:(NSString *)format, ... {
+- (ParcoaResult *)prependExpectationWithInput:(NSString *)input remaining:(NSRange)remaining expectedWithFormat:(NSString *)format, ... {
     va_list args;
     va_start(args, format);
     NSString *expected = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
-    return [self prependExpectationWithRemaining:remaining expected:expected];
+    return [self prependExpectationWithInput:input remaining:remaining expected:expected];
 }
 
 - (BOOL)isFail {
@@ -126,15 +129,24 @@
 }
 
 - (id)value {
+    if([_value isKindOfClass:ParcoaParcelString.class]){
+        return [(ParcoaParcelString *)_value stringValue];
+    }
+    
     if([_value isKindOfClass:NSArray.class]){
         return [(NSArray *)_value arrayByConcatPercelStrings];
     }    
     return _value;
 }
 
+- (NSString *)residual
+{
+    return [self.input substringWithRange:self.residualRange];
+}
+
 - (NSString *)description {
     if ([self isOK]) {
-        return [NSString stringWithFormat:@"ParcoaResult(OK,%@,%@)", self.value, self.residual];
+        return [NSString stringWithFormat:@"ParcoaResult(OK,%@,%@[%lud-%lud])", self.value, self.input, self.residualRange.location, self.residualRange.location + self.residual.length - 1];
     } else {
         return [NSString stringWithFormat:@"ParcoaResult(Fail,%@)", self.expectation];
     }

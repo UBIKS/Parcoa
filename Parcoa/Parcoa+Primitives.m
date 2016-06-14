@@ -42,10 +42,10 @@
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         if (input.length && [predicate check:[input characterAtIndex:0]]) {
             ParcoaParcelString *value = [input substringToIndex:1];
-            ParcoaParcelString *residual = [input substringFromIndex:1];
-            return [ParcoaResult ok:value residual:residual expected:[ParcoaExpectation unsatisfiable]];
+            NSRange residual = NSMakeRange(input.range.location + 1, input.range.length - 1);
+            return [ParcoaResult ok:value input:input.string residual:residual expected:[ParcoaExpectation unsatisfiable]];
         } else {
-            return [ParcoaResult failWithRemaining:input expectedWithFormat:@"Character matching predicate %@", predicate.description];
+            return [ParcoaResult failWithInput:input.string remaining:input.range expectedWithFormat:@"Character matching predicate %@", predicate.description];
         }
     } name:@"satisfy" summary:predicate.description];
 }
@@ -57,9 +57,10 @@
 + (ParcoaParser *)string:(NSString *)string {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         if ([input hasPrefix:string]) {
-            return [ParcoaResult ok:string residual:[input substringFromIndex:string.length] expected:[ParcoaExpectation unsatisfiable]];
+            NSRange residual = NSMakeRange(input.range.location + string.length, input.range.length - string.length);
+            return [ParcoaResult ok:string input:input.string residual:residual expected:[ParcoaExpectation unsatisfiable]];
         } else {
-            return [ParcoaResult failWithRemaining:input expectedWithFormat:@"String literal \"%@\"", string];
+            return [ParcoaResult failWithInput:input.string remaining:input.range expectedWithFormat:@"String literal \"%@\"", string];
         }
     } name:@"string" summaryWithFormat:@"\"%@\"", string];
 }
@@ -67,9 +68,9 @@
 + (ParcoaParser *)peek:(NSString *)string {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         if ([input hasPrefix:string]) {
-            return [ParcoaResult ok:string residual:input expected:[ParcoaExpectation unsatisfiable]];
+            return [ParcoaResult ok:string input:input.string residual:input.range expected:[ParcoaExpectation unsatisfiable]];
         } else {
-            return [ParcoaResult failWithRemaining:input expectedWithFormat:@"String literal \"%@\"", string];
+            return [ParcoaResult failWithInput:input.string remaining:input.range expectedWithFormat:@"String literal \"%@\"", string];
         }
     } name:@"peek" summaryWithFormat:@"\"%@\"", string];
 }
@@ -77,9 +78,10 @@
 + (ParcoaParser *)take:(NSUInteger)n {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         if (input.length >= n) {
-            return [ParcoaResult ok:[input substringToIndex:n] residual:[input substringFromIndex:n] expected:[ParcoaExpectation unsatisfiable]];
+            NSRange residualRange = NSMakeRange(input.range.location + n, input.range.length - n);
+            return [ParcoaResult ok:[input substringToIndex:n] input:input.string residual:residualRange expected:[ParcoaExpectation unsatisfiable]];
         } else {
-            return [ParcoaResult failWithRemaining:input expectedWithFormat:@"%u unichars", n];
+            return [ParcoaResult failWithInput:input.string remaining:input.range expectedWithFormat:@"%u unichars", n];
         }
     } name:@"take" summaryWithFormat:@"%u unichars", n];
 }
@@ -88,9 +90,10 @@
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         ParcoaResult *result = [[Parcoa takeWhile1:predicate] parse:input];
         if (result.isOK && [result.value length] >= n) {
-            return [ParcoaResult ok:[input substringToIndex:n] residual:[input substringFromIndex:n] expected:[ParcoaExpectation unsatisfiable]];
+            NSRange residualRange = NSMakeRange(input.range.location + n, input.range.length - n);
+            return [ParcoaResult ok:[input substringToIndex:n] input:input.string residual:residualRange expected:[ParcoaExpectation unsatisfiable]];
         } else {
-            return [ParcoaResult failWithRemaining:input expectedWithFormat:@"%u characters matching %@", n, predicate];
+            return [ParcoaResult failWithInput:input.string remaining:input.range expectedWithFormat:@"%u characters matching %@", n, predicate];
         }
     } name:@"takeCount" summaryWithFormat:@"%u characters matching %@", n, predicate];
 }
@@ -111,8 +114,8 @@
                 break;
         }
         ParcoaParcelString *value = [input substringToIndex:i];
-        ParcoaParcelString *residual = [input substringFromIndex:i];
-        return [ParcoaResult ok:value residual:residual expectedWithFormat:@"Character matching predicate %@", condition.description];
+        NSRange residualRange = NSMakeRange(input.range.location + i, input.range.length - i);
+        return [ParcoaResult ok:value input:input.string residual:residualRange expectedWithFormat:@"Character matching predicate %@", condition.description];
     } name:@"takeWhile" summary:condition.description];
 }
 
@@ -120,11 +123,12 @@
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         ParcoaResult *head = [[Parcoa satisfy:condition] parse:input];
         if (head.isOK) {
-            ParcoaResult *tail = [[Parcoa takeWhile:condition] parse:head.residual];
+            ParcoaParcelString *residual = [[ParcoaParcelString alloc] initWithString:input.string range:head.residualRange];
+            ParcoaResult *tail = [[Parcoa takeWhile:condition] parse:residual];
             id value = [head.value stringByAppendingString:tail.value];
-            return [ParcoaResult ok:value residual:tail.residual expectedWithFormat:@"Character matching predicate %@", condition.description];
+            return [ParcoaResult ok:value input:input.string residual:tail.residualRange expectedWithFormat:@"Character matching predicate %@", condition.description];
         } else {
-            return [ParcoaResult failWithRemaining:input expectedWithFormat:@"Character matching predicate %@", condition.description];
+            return [ParcoaResult failWithInput:input.string remaining:input.range expectedWithFormat:@"Character matching predicate %@", condition.description];
         }
     } name:@"takeWhile1" summary:condition.description];
 }
@@ -137,23 +141,23 @@
                 break;
         }
         ParcoaParcelString *value = [input substringToIndex:i];
-        ParcoaParcelString *residual = [input substringFromIndex:i];
-        return [ParcoaResult ok:value residual:residual expectedWithFormat:@"Character not matching predicate %@", condition.description];
+        NSRange residualRange = NSMakeRange(input.range.location + i, input.range.length - i);
+        return [ParcoaResult ok:value input:input.string residual:residualRange expectedWithFormat:@"Character not matching predicate %@", condition.description];
     } name:@"takeUntil" summary:condition.description];
 }
 
 + (ParcoaParser *)atEnd {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
-        return [ParcoaResult ok:[NSNumber numberWithBool:input.length == 0] residual:input expected:[ParcoaExpectation unsatisfiable]];
+        return [ParcoaResult ok:[NSNumber numberWithBool:input.length == 0] input:input.string residual:input.range expected:[ParcoaExpectation unsatisfiable]];
     } name:@"atEnd" summary:nil];
 }
 
 + (ParcoaParser *)endOfInput {
     return [ParcoaParser parserWithBlock:^ParcoaResult *(ParcoaParcelString *input) {
         if (input.length == 0) {
-            return [ParcoaResult ok:[NSNull null] residual:input expected:[ParcoaExpectation unsatisfiable]];
+            return [ParcoaResult ok:[NSNull null] input:input.string residual:input.range expected:[ParcoaExpectation unsatisfiable]];
         } else {
-            return [ParcoaResult failWithRemaining:input expected:@"Expected end of input"];
+            return [ParcoaResult failWithInput:input.string remaining:input.range expected:@"Expected end of input"];
         }
     } name:@"endOfInput" summary:nil];
 }
