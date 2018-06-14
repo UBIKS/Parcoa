@@ -78,7 +78,7 @@ typedef ParcoaResult *(^ParcoaParserBlock)(ParcoaString *input);
  *  @param block A pure function block that attempt to parse an input string
  *               then returns a ParcoaResult.
  *  @param name A human readable name.
- *  @param name A human readable summary.
+ *  @param summary A human readable summary.
  */
 + (ParcoaParser *)parserWithBlock:(ParcoaParserBlock)block name:(NSString *)name summary:(NSString *)summary;
 
